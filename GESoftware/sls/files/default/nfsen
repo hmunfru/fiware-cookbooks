@@ -1,0 +1,61 @@
+#!/bin/sh -e
+
+# Start or stop nfsen
+#
+# Alexander Pyhalov <alp@sfedu.ru>
+# Basecd on postfix init.d script by
+# LaMont Jones <lamont@debian.org>
+# based on sendmail's init.d script
+
+### BEGIN INIT INFO
+# Provides:          nfsen
+# Required-Start:    $local_fs $remote_fs $syslog $named $network $time
+# Required-Stop:     $local_fs $remote_fs $syslog $named $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: start and stop the nfsen service
+# Description:       nfsen is nfsen netflow capture service
+### END INIT INFO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON=/usr/bin/nfsen
+NAME=Nfsen
+
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+case "$1" in
+    start)
+        log_daemon_msg "Starting Nfsen"  nfsen
+        if ${DAEMON} start ; then
+          log_end_msg 0
+        else
+          log_end_msg 1
+        fi
+    ;;
+
+    stop)
+        log_daemon_msg "Stopping Nfsen" nfsen
+        if ${DAEMON} stop ; then
+           log_end_msg 0
+        else
+           log_end_msg 1
+        fi
+    ;;
+
+    restart)
+        $0 stop
+        sleep 1;
+        $0 start
+    ;;
+
+    *)
+        log_action_msg "Usage: /etc/init.d/nfsen {start|stop|restart}"
+        exit 1
+    ;;
+esac
+
+exit 0
+

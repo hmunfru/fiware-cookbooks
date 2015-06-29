@@ -1,0 +1,33 @@
+global
+    log         127.0.0.1 local2 
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+
+defaults
+    mode        http
+    log         global
+    option      dontlognull
+    option      httpclose
+    option      httplog
+    option      forwardfor
+    option      redispatch
+    timeout connect 10000 # default 10 second time out if a backend is not found
+    timeout client 300000
+    timeout server 300000
+    maxconn     60000
+    retries     3
+        
+# Set up application listeners here.
+listen apache
+  bind 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
+  option httpclose
+  balance  <%= node["haproxy"]["balance_algorithm"] %>
+  option	forwardfor
+  cookie  JSESSIONID prefix 
+  server localhost 127.0.0.1:4000 weight 1 maxconn <%= node["haproxy"]["member_max_connections"] %> check 
+  server localhost 127.0.0.1:4001 weight 1 maxconn <%= node["haproxy"]["member_max_connections"] %> check 
+

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<config>
+	<log filename="/var/log/ossim/server.log"/>
+  <framework name="alienvault"  ip="<%= node[:ossim][:server][:ip]%>" port="40003"/>
+	<datasources>
+		<datasource name="ossimDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=<%= node[:ossim][:server][:db_user]%>;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+		<datasource name="snortDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=<%= node[:ossim][:server][:db_user]%>;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault_siem;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+		<datasource name="osvdbDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=<%= node[:ossim][:server][:db_user]%>;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault_siem;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+
+	</datasources>
+	<directive filename="/etc/ossim/server/directives.xml"/>
+	<scheduler interval="15"/>
+  <server port="40001" name="alienvault" ip="<%= node[:ossim][:server][:ip]%>" id="873ddce7-4ca8-362c-b59b-274100e7efab"/>
+		
+    
+<idm mssp="false"/>
+
+<reputation filename="/etc/ossim/server/reputation.data"/>
+</config>

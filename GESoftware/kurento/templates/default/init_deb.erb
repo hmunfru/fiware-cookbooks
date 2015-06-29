@@ -1,0 +1,103 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          jboss
+# Required-Start:    kurentod
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/Stop JBoss AS <%=node['kurento']['jboss_version']%>
+# Description:       init script for JBoss Application Server
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME="jboss" 
+JBOSS_HOME=${JBOSS_HOME:-"<%=node['kurento']['jboss_home']%>"} 
+DAEMON="$JBOSS_HOME/bin/standalone.sh" 
+SHUTDOWN_CMD="$JBOSS_HOME/bin/jboss-cli.sh" 
+DAEMON_USER=${DAEMON_USER:-"<%=node['kurento']['jboss_user']%>"}
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+DESC="JBoss AS Server <%=node['kurento']['jboss_version']%>"
+
+if [ -r "/lib/lsb/init-functions" ]; then
+  . /lib/lsb/init-functions
+else
+  echo "E: /lib/lsb/init-functions not found, package lsb-base needed" 
+  exit 1
+fi
+
+# Include defaults if available
+if [ -f /etc/default/jboss ] ; then
+    . /etc/default/jboss
+fi
+
+verify_user () {
+# Only root can start Kurento
+    if [ `id -u` -ne 0 ]; then
+        log_failure_msg "Only root can start JBoss" 
+        exit 1
+    fi
+}
+
+if [ "$START_JBOSS" != "true" ]; then
+    log_failure_msg "Review activate settings within file /etc/default/jboss" 
+    exit 1
+fi
+
+if [ ! -e $JBOSS_HOME ]; then
+     log_failure_msg "Unable to access JBoss home directory at: $JBOSS_HOME" 
+     exit 1
+fi
+
+JBOSS_OPTS="$JBOSS_OPTS -b 0.0.0.0" 
+
+case "$1" in
+      start)
+          log_daemon_msg "Starting $DESC" "$NAME" 
+                verify_user
+
+          # Verify pid file directory exists
+          if [ ! -e /var/run ]; then
+               install -d -m755 /var/run || { log_failure_msg "Unable to access /var/run directory"; exit 1; }
+          fi
+          # Make sure HOME directory belongs to $DAEMON_USER
+          sudo -u $DAEMON_USER -H [ -O $JBOSS_HOME/standalone/log ]
+          if [ $? != 0 ]; then
+               chown -R $DAEMON_USER $JBOSS_HOME/* || { log_failure_msg "Unable to access $JBOSS_HOME"; exit 1; }
+          fi
+
+          /sbin/start-stop-daemon --start --pidfile $PIDFILE \
+                    --chuid $DAEMON_USER --chdir $JBOSS_HOME/bin --background --make-pidfile --no-close \
+                    --startas $DAEMON -- $JBOSS_OPTS > /dev/null
+          log_end_msg $?
+          ;;
+
+       stop)
+            log_daemon_msg "Stopping $DESC" "$NAME" 
+            # This will just kill the standalone script. Java process detaches :(
+            /sbin/start-stop-daemon --stop --quiet --pidfile $PIDFILE \
+                 --chuid $DAEMON_USER --startas $DAEMON
+            if [ $? -eq 0 ]; then
+               # Send kill command to JBoss
+               $SHUTDOWN_CMD --connect command=:shutdown
+               rm -f $PIDFILE
+               log_end_msg 0
+            fi
+            ;;
+
+      restart|force-reload)
+            echo -n "Restarting $DESC: $NAME" 
+            /sbin/start-stop-daemon --stop --quiet --pidfile $PIDFILE \
+                    --exec $DAEMON
+            rm -f $PIDFILE
+            sleep 1
+            echo -e
+            $0 start
+            ;;
+      *)
+            echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+            exit 1
+            ;;
+esac
+
+exit 0

@@ -1,0 +1,55 @@
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ontologyinstance`
+--
+
+CREATE TABLE IF NOT EXISTS `OntologyInstance` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `context` varchar(255) NOT NULL,
+  `ontology_name` varchar(255) NOT NULL,
+  `out_of_date` tinyint(1) NOT NULL,
+  `version` bigint(20) NOT NULL,
+  `ontology_registry_id` bigint(20) NOT NULL,
+  `workspace_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK4C8B87241D16F070` (`ontology_registry_id`),
+  KEY `FK4C8B872486AA523` (`workspace_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ontologyregistry`
+--
+
+CREATE TABLE IF NOT EXISTS `OntologyRegistry` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `workspace`
+--
+
+CREATE TABLE IF NOT EXISTS `Workspace` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `connection_string` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `driver` varchar(255) NOT NULL,
+  `initialized` tinyint(1) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `FKB98A0C7525BB94EE` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+

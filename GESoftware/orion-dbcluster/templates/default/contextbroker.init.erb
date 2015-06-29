@@ -1,0 +1,8 @@
+mongo admin <<EOF
+  db.runCommand({enablesharding : "orion"})
+  db.runCommand({shardcollection: "orion.entities", key: {_id: 1}})
+  db.runCommand({shardcollection: "orion.registrations", key: {_id: 1}})
+  db.runCommand({shardcollection: "orion.casubs", key: {_id: 1}})
+  db.runCommand({shardcollection: "orion.csubs", key: {_id: 1}})
+  quit()
+EOF

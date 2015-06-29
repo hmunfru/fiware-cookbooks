@@ -1,0 +1,24 @@
+{
+ "name":"prrs",
+ "mysql": {"server_root_password": "808052769e2c6d909027a2905b224bad", "server_debian_password": "569d1ed2d46870cc020fa87be83af98d", "server_repl_password": "476911180ee92a2ee5a471f33340f6f4"},
+ "prrs": {
+    	"activateDownload": 0,
+	"activateLogger_FIWARE": 0,
+	"syslogServer": "192.168.215.118",
+	"syslogPort": "514",
+	"database_user": "fiware",
+	"database_password": "fiware",
+	"database_url": "jdbc:mysql://localhost:3306",
+	"database_contextdb_url": "jdbc:mysql://localhost:3306/prrscontextmanager",
+	"database_secrepo_url": "jdbc:mysql://localhost:3306/securityrepository",
+	"marketplace_url": "http://appsnserv.testbed.fi-ware.eu/FiwareMarketplace/v1",
+	"collection_name": "offering/store/security/offerings",
+	"marketplace_user": "integrationUser123",
+	"marketplace_passwd": "integrationUser123",
+	"contextmonitor_startTime": 1000,
+	"contextmonitor_pollTime": 1000
+ },
+ "run_list": [ 
+	"recipe[prrs]" 
+  ]
+}

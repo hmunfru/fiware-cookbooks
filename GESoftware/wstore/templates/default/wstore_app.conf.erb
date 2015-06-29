@@ -1,0 +1,53 @@
+<VirtualHost *:<%= node[:wstore][:port] %>>
+
+    DocumentRoot <%= @params[:docroot] %>
+
+    <Directory <%= @params[:docroot] %>>
+        Options FollowSymLinks
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+
+    <Location /server-status>
+        SetHandler server-status
+
+        Order Deny,Allow
+        Deny from all
+        Allow from 127.0.0.1
+    </Location>
+
+    ### WStore ###
+    WSGIDaemonProcess wstore user=<%= node[:wstore][:user] %> group=<%= node[:wstore][:group] %> python-path=<%= node[:wstore][:root_dir] %>:<%= node[:wstore][:virtualenv] %>/lib/python<%= node[:python][:version].split(/(^\d+\.\d+)/)[1]%>/site-packages
+    WSGIScriptAlias / <%= node[:wstore][:root_dir] %>wsgi.py
+    WSGIProcessGroup wstore
+    setenv DISPLAY :98
+
+    Alias /static <%= node[:wstore][:root_dir] %>static
+    <Location "/static">
+        SetHandler None
+        <IfModule mod_expires.c>
+                ExpiresActive On
+                ExpiresDefault "access plus 1 week"
+        </IfModule>
+        <IfModule mod_headers.c>
+                Header append Cache-Control "public"
+        </IfModule>
+    </Location>
+
+    <Location "/static/cache">
+        <IfModule mod_expires.c>
+                ExpiresDefault "access plus 3 years"
+        </IfModule>
+    </Location>
+
+    LogLevel info
+    ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+    CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+
+</VirtualHost>

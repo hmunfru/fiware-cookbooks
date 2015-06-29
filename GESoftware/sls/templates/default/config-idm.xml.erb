@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<config>
+	<datasources>
+		<datasource name="ossimDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=root;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+		<datasource name="snortDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=root;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault_siem;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+		<datasource name="osvdbDS" provider="MySQL" dsn="PORT=<%= node[:ossim][:server][:db_port]%>;USER=root;PASSWORD=<%= node[:ossim][:server][:db_pass]%>;DATABASE=alienvault;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+	</datasources>
+	<idm ip="<%= node[:ossim][:server][:ip]%>" port="40002" mssp="false" />
+</config>

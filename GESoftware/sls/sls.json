@@ -1,0 +1,73 @@
+{
+ "name":"sls-standalone",
+ "mysql": {"server_root_password": "4O73H267AP", "server_debian_password": "569d1ed2d46870cc020fa87be83af98d", "server_repl_password": "476911180ee92a2ee5a471f33340f6f4"},
+ "sls": {"home": "/home/fiware",
+         "install_dir": "/home/fiware/install",
+         "topology": {
+               "workers": "6",
+               "schemaParallelism": "1",
+               "policyParallelism": "1",
+               "dbWriterParallelism": "2",
+               "actionParallelism": "1",
+               "crossCorrParallelism": "1"
+                   }
+         },
+ "zookeeper": { 
+          "install_dir": "/usr/local", "log_dir": "/var/log/zookeeper"
+          },
+ "ossim": {
+          "server": {"enable": "True","ip": "127.0.0.1","listen_port": "40001","port": "50001",
+               "admin_ip": "127.0.0.1", "admin_netmask": "255.255.255.0",
+               "admin_dns": "130.206.1.19", "admin_gateway": "130.206.81.1",
+               "db_ip": "127.0.0.1", "db_port": "3306", "db_user": "root", "db_pass": "4O73H267AP",
+               "profile": "Database, Server, Framework, Sensor",
+               "plugins": "osiris, pam_unix, ssh, snare, sudo, fiware"
+               },
+          "log": {"path": "/var/log/ossim"},
+          "frameworkd": {"server_ip": "127.0.0.1","ip": "40003"},
+          "storm": {"enable": "True","ip": "127.0.0.1","port": "41000","enable_ssl": "True"},
+          "ssl": {"enable": "True", "socat": "yes","cert": "/etc/ossim/ssl/server.pem","port": "50001"},
+          "plugin_defaults": {"sensor": "127.0.0.1"},
+          "sensor": {"detectors": "snare, syslog, nessus, fiware"},
+          "plugins": {
+              "fiware": {"enable": true},
+              "apache": {"enable": false},
+              "cisco-router": {"enable": true},
+              "nagios": {"enable": true},
+              "osiris": {"enable": false},
+              "pam_unix": {"enable": true},
+              "ossec": {"enable": false},
+              "snare": {"enable": true},
+              "snortunified": {"enable": true},
+              "nmap": {"enable": true},
+              "opennms": {"enable": false},
+              "ntop": {"enable": false},
+              "ping": {"enable": false}
+           } 
+      },
+  "storm": {
+          "component": "standalone",
+          "cluser_role": "ServiceLevelSIEM",
+          "user": "root",
+          "group": "root",
+          "home": "/home/fiware",
+          "install_dir": "/home/fiware",
+          "log_dir": "/var/log/storm",
+          "nimbus": { 
+                 "host": "127.0.0.1"
+                 },
+          "supervisor": {
+                 "workers": 6,
+                 "ports": "6700, 6701, 6702, 6703, 6704, 6705"
+                 },
+          "zookeeper": {
+                 "servers": ["127.0.0.1"]
+                 }
+      },
+ "securityprobe": {"home": "/home/fiware"
+                   },
+ "run_list": [
+        "recipe[sls-securityprobe]", "recipe[sls]"
+  ]
+}
+

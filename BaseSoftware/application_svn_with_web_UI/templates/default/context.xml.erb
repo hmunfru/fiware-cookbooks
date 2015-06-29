@@ -1,0 +1,5 @@
+<Context docBase="<%= @war %>" path="/"
+        debug="5" reloadable="true" crossContext="true" allowLinking="true">
+  <Environment name="appEnvironment" value="<%= node.chef_environment %>"
+          type="java.lang.String" override="false"/>
+</Context>

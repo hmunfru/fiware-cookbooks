@@ -1,0 +1,53 @@
+srf_idNo = 0
+//SDMANAGER RMI PROPERTIES
+srf_host = localhost
+srf_rmi_port = 5050
+
+//LOGGERS
+srf_log_path = log/srf.log
+reactions_log_path = log/reactions.log
+requests_log_path = log/requests.log
+services_log_folder = log/services/
+
+//EVENT MANAGER SOCKETS
+srf_ec_monitoring_port = 49900
+
+//EC MANAGER
+srf_ecfactory_jar_path = execComps/
+
+//jdk bin path
+jdk_path = C:/env/projectAniketos/glassfish3/jdk/jre/bin/
+
+//Activate downloading of software
+activateDownload = <%= node['prrs']['activateDownload']%>
+
+//Deployment folder
+deploymentFolder = /usr/share/tomcat7/webapps
+contextXMLFile = /usr/share/tomcat7/conf/context.xml
+
+//http server url: EVENT MANAGER WEB SERVICE
+eventmngr_httpserver_url = localhost:8080
+
+//FI-WARE Security Monitoring Properties
+activateLogger_FI-WARE = <%= node['prrs']['activateLogger_FIWARE']%>
+syslogServer = <%= node['prrs']['syslogServer']%>
+syslogPort = <%= node['prrs']['syslogPort']%>
+
+//Database Information
+database.user = <%= node['prrs']['database_user']%>
+database.password = <%= node['prrs']['database_password']%>
+database.url = <%= node['prrs']['database_url']%>
+database.contextdb.url = <%= node['prrs']['database_contextdb_url']%>
+database.secrepo.url = <%= node['prrs']['database_secrepo_url']%>
+
+//FI-WARE Marketplace Information
+marketplace.url = <%= node['prrs']['marketplace_url']%>
+collection.name = <%= node['prrs']['collection_name']%>
+marketplace.user = <%= node['prrs']['marketplace_user']%>
+marketplace.passwd = <%= node['prrs']['marketplace_passwd']%>
+
+//PRRS Context-Monitor
+contextmonitor.startTime = <%= node['prrs']['contextmonitor_startTime']%>
+contextmonitor.pollTime = <%= node['prrs']['contextmonitor_pollTime']%>
+
+

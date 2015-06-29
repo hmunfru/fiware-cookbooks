@@ -1,0 +1,12 @@
+
+<VirtualHost *:80>
+   ProxyPreserveHost On
+   ProxyRequests Off
+   ProxyPass /<%= node['svnwebadmin']['application_name'] %> http://localhost:8080/<%= node['svnwebadmin']['application_name'] %>
+   ProxyPassReverse /<%= node['svnwebadmin']['application_name'] %> http://localhost:8080/<%= node['svnwebadmin']['application_name'] %>
+   
+   <Proxy *>
+        Order deny,allow
+        Allow from all
+   </Proxy>
+</VirtualHost>

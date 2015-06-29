@@ -1,0 +1,7 @@
+include_recipe "cosmos::uninstall_sftp_server"
+#include_recipe "java::oracle"
+include_recipe "cosmos::install_java"
+package "mysql-server"
+#include_recipe "mysql::server"
+include_recipe "cosmos::provision_sftp_user"
+include_recipe "cosmos::install_sftp_server"

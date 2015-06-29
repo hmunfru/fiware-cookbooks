@@ -1,0 +1,32 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          tomcat
+# Required-Start:
+# Required-Stop:     tomcat
+# Default-Start:
+# Default-Stop:      0 6
+# Short-Description: Starts tomcat daemon
+# Description:
+### END INIT INFO
+
+
+case "$1" in
+  start)
+        <%= @tomcat_home %>/bin/catalina.sh start
+        ;;
+  restart|reload|force-reload)
+        <%= @tomcat_home %>/bin/catalina.sh stop
+        /bin/sleep 3
+        <%= @tomcat_home %>/bin/catalina.sh start
+        echo "reload enviado " >> /tmp/tomcat.log
+        ;;
+  stop)
+        <%= @tomcat_home %>/bin/catalina.sh stop
+        ;;
+  *)
+        echo "Usage: $0 start|stop|restart|reload|force-reload" >&2
+        exit 3
+        ;;
+esac
+
+:

@@ -1,0 +1,25 @@
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hibernate_sequence`
+--
+
+CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ontologyjpa`
+--
+
+CREATE TABLE IF NOT EXISTS `OntologyJPA` (
+  `ontologyName` varchar(255) NOT NULL,
+  `version` bigint(20) NOT NULL,
+  `ontologyFile` longtext NOT NULL,
+  `versionName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ontologyName`,`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

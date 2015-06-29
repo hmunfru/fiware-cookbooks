@@ -1,0 +1,16 @@
+# Defaults for JBoss7 initscript
+# sourced by /etc/init.d/jboss7
+# installed at /etc/default/jboss7 by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+#uncommment the next line to allow the init.d script to start the stun daemon
+START_JBOSS=true
+
+# Additional options that are passed to the Daemon.
+BIND_IP=<%=node[:ipaddress]%>
+
+# whom the daemons should run as
+JBOSS_USER=<%=node['kurento']['jboss_user']%>

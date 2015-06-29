@@ -1,0 +1,33 @@
+{
+ "name":"sls-securityprobe",
+ "securityprobe": {"home": "/home/fiware"
+                   },
+ "ossim": {
+          "log": {"path": "/var/log/ossim"},
+          "sensor": {"detectors": "snare, syslog,nessus , fiware"},
+          "frameworkd": {"server_ip": "127.0.0.1","ip": "40003"},
+          "storm": {"enable": "True","ip": "127.0.0.1","port": "41000","enable_ssl": "True"},
+          "server": {"enable": "True","ip": "127.0.0.1","port": "40001"},
+          "ssl": {"enable": "True","cert": "/etc/ossim/agent/slsserver.cert","port": "50001"},
+          "plugin_defaults": {"sensor": "127.0.0.1"},
+          "plugins": {
+              "fiware": {"enable": true},
+              "apache": {"enable": false},
+              "cisco-router": {"enable": true},
+              "nagios": {"enable": true},
+              "osiris": {"enable": false},
+              "pam_unix": {"enable": true},
+              "ossec": {"enable": false},
+              "snare": {"enable": true},
+              "snortunified": {"enable": true},
+              "nmap": {"enable": true},
+              "opennms": {"enable": false},
+              "ntop": {"enable": false},
+              "ping": {"enable": false}
+           } 
+      },
+ "run_list": [
+        "recipe[sls-securityprobe]"
+  ]
+}
+

@@ -1,0 +1,26 @@
+{
+ "name":"sls-standalone",
+ "mysql": {"server_root_password": "808052769e2c6d909027a2905b224bad", "server_debian_password": "569d1ed2d46870cc020fa87be83af98d", "server_repl_password": "476911180ee92a2ee5a471f33340f6f4"},
+ "sls": {
+                "database_user": "fiware",
+                "database_password": "fiware"
+  },
+ "ossim": {
+     "server": {
+            "ip": "127.0.0.1"
+       }
+  },
+ "storm": {
+       "component": "standalone"
+  },
+  "runit": {
+       "sv_bin": "/usr/bin/sv",
+       "chpst_bin": "/usr/bin/chpst",
+       "service_dir": "/etc/service",
+       "sv_dir": "/etc/sv"
+  },
+ "run_list": [ 
+	"recipe[sls]" 
+  ]
+}
+

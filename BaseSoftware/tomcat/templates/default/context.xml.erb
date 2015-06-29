@@ -1,0 +1,9 @@
+<Context docBase="<%= @war %>" path="/<%= @path %>"
+        debug="5" reloadable="true" crossContext="true" allowLinking="true">
+  <% if @database != nil  -%>
+  <Resource name="jdbc/<%= @app %>" auth="Container" type="javax.sql.DataSource"
+               maxActive="<%= @database['max_active'] %>" maxIdle="<%= @database['max_idle'] %>" maxWait="<%= @database['max_wait'] %>"
+               username="<%= @database['username'] %>" password="<%= @database['password'] %>" driverClassName="<%= @database['driver'] %>"
+               url="jdbc:<%= @database['adapter'] %>://<%= @host %>:<%= @database['port'] %>/<%= @database['database'] %>"/>
+ <% end -%>
+</Context>

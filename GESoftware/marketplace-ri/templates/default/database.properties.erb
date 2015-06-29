@@ -1,0 +1,4 @@
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://<%= node[:marketplaceri][:mysql_bind_address] %>:3306/<%= node[:marketplaceri][:db_name] %>
+jdbc.username=<%= node[:marketplaceri][:db_username] %>
+jdbc.password=<%= node[:marketplaceri][:db_password] %>

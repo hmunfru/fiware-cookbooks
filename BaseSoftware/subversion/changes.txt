@@ -1,0 +1,13 @@
+Subversion Cookbook
+
+This file is used to list all changes made in the version v1.1.0 of the subversion cookbook to add the authorization.
+
+1. templates/default/subversion.conf.erb
+   - add the AuthzSVNAccessFile property
+
+2. recipes/server.rb
+   - create the authz file for authorization
+   - add read/write permissions in the authz file (i.e. for subversion user it uses rw)
+   - change permission for htpasswd and authz files (used chmod 777) - so another webapp can edit it
+   - add authz_svn_module module (svn_authz.load) for authorization
+

@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# tomcat          Start/Stop the tomcat daemon
+#
+# chkconfig: 2345 90 60
+# description: tomcat is an http server, jsp container and so on.. \
+#              bla, bla
+
+### BEGIN INIT INFO
+# Provides: tomcat
+# Required-Start: $local_fs $syslog
+# Required-Stop: $local_fs $syslog
+# Default-Start:  2345
+# Default-Stop: 90
+# Short-Description: runs tomcat
+# Description: Tomcat is an http server and jsp container
+### END INIT INFO
+
+case "$1" in
+  start)
+        <%= @tomcat_home %>/bin/catalina.sh start
+        ;;
+  restart|reload|force-reload)
+        <%= @tomcat_home %>/bin/catalina.sh stop
+        /bin/sleep 3
+        <%= @tomcat_home %>/bin/catalina.sh start
+        echo "reload enviado " >> /tmp/tomcat.log
+        ;;
+  stop)
+        <%= @tomcat_home %>/bin/catalina.sh stop
+        ;;
+  *)
+        echo "Usage: $0 start|stop|restart|reload|force-reload" >&2
+        exit 3
+        ;;
+esac
+
+

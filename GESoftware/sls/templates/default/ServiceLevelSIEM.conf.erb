@@ -1,0 +1,43 @@
+//AGENT OSSIM PROPERTIES
+spout_port = <%= node[:ossim][:storm][:port]%>
+
+//INCOMING EVENT SCHEMA
+schemaNames = event_id,plugin_id,plugin_sid,date,device,interface,src_ip,dst_ip,userdata1,userdata2,userdata3,userdata4,userdata5,userdata6,userdata7,userdata8,userdata9,fdate
+
+//SLS ALARM PARAMETERS
+alarmSchema = AlarmID,BacklogID,ListOfEventID
+DirectiveSLS = <%= node[:sls][:topology][:directiveSLS]%>
+
+// TOPOLOGY PARAMETERS      
+topologyName = "topologyPATTERN"
+TOPOLOGY_WORKERS = <%= node[:sls][:topology][:workers]%>
+//Leave spout parallelism to 1 
+spoutParallelism = 1
+// Preprocessing and filtering Bolt
+schemaParallelism = <%= node[:sls][:topology][:schemaParallelism]%>
+policyParallelism = <%= node[:sls][:topology][:policyParallelism]%>
+// Database writer Bolt
+dbWriterParallelism = <%= node[:sls][:topology][:dbWriterParallelism]%>
+// Action Bolt
+actionParallelism = <%= node[:sls][:topology][:actionParallelism]%>
+// Cross Correlation Bolt
+crossCorrParallelism = <%= node[:sls][:topology][:crossCorrParallelism]%>
+
+//DATABASE PARAMETERS
+databaseIP = <%= node[:ossim][:server][:db_ip]%>
+databasePort = <%= node[:ossim][:server][:db_port]%>
+databaseAlarms = alienvault
+databaseEvents = alienvault_siem
+userName = <%= node[:ossim][:server][:db_user]%>
+pwd = <%= node[:ossim][:server][:db_pass]%>
+
+//SSL Configuration (TLS/SSLv3/NONE)
+sslProtocol = <%= node[:sls][:topology][:sslProtocol]%>
+keyStore = <%= node[:sls][:topology][:keyStore]%>
+keyStorePassword = <%= node[:sls][:topology][:keyStorePassword]%>
+keyStoreType = <%= node[:sls][:topology][:keyStoreType]%>
+trustStore = <%= node[:sls][:topology][:trustStore]%>
+trustStorePassword = <%= node[:sls][:topology][:trustStorePassword]%>
+trustStoreType = <%= node[:sls][:topology][:trustStoreType]%>
+
+

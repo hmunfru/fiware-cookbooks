@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<libgda-config>
+  <!-- User specific data sources go here -->
+  <section path="/apps/libgda/Datasources/alienvault">
+        <entry name="Provider" type="string" value="MySQL"/>
+        <entry name="Username" type="string" value="root"/>
+        <entry name="Password" type="string" value="4O73H267AP"/>
+        <entry name="DSN" type="string" value="PORT=3306;DATABASE=alienvault;HOST=127.0.0.1"/>
+    </section>
+    <section path="/apps/libgda/Datasources/alienvault_siem">
+        <entry name="Provider" type="string" value="MySQL"/>
+        <entry name="Username" type="string" value="root"/>
+        <entry name="Password" type="string" value="4O73H267AP"/>
+        <entry name="DSN" type="string" value="PORT=3306;DATABASE=alienvault_siem;HOST=127.0.0.1"/>
+    </section>
+</libgda-config>

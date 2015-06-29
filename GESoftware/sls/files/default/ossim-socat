@@ -1,0 +1,56 @@
+#!/bin/bash
+
+SOCATBIN=/usr/bin/socat
+
+# Gracefully exit if the package has been removed.
+test -x $SOCATBIN || exit 0
+
+config_file="/etc/ossim/ossim_setup.conf"
+source $config_file 2> /dev/null
+
+#
+#       Function that starts the daemon/service.
+#
+d_start() {
+  if [ $socat == "yes" ]
+  then
+    # check n processes and if greater than 1, kill them
+    ninp=`ps ax | grep $SOCATBIN| grep -v grep| wc -l` > /dev/null
+    if [ $ninp -gt 1 ]; then
+        ps ax | grep $SOCATBIN | grep -v grep| awk '{print$1}' |while read line ;do kill -9 $line; done
+   fi
+
+   $SOCATBIN openssl-listen:$listen_port,fork,cert=$cert,verify=0 TCP:localhost:$server_port &
+fi
+}
+
+#
+#       Function that stops the daemon/service.
+#
+d_stop() {
+    # check n processes and if greater than 1, kill them
+   ninp=`ps ax | grep $SOCATBIN| grep -v grep| wc -l` > /dev/null
+   if [ $ninp -gt 1 ]; then
+        ps ax | grep $SOCATBIN | grep -v grep| awk '{print$1}' |while read line ;do kill -9 $line; done
+   fi
+}
+
+case "$1" in
+  start)
+   d_start
+   ;;
+ stop)
+    d_stop
+ ;;
+ restart)
+  d_stop
+  d_start
+  ;;
+  *)
+        echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
+

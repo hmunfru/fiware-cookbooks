@@ -1,0 +1,11 @@
+{
+   "tomcat": {
+     "webapp_dir": "/opt/apache-tomcat-7.0.26/webapps",
+     "config_dir":"/opt/apache-tomcat-7.0.26/conf",
+	 "bin_dir":"/opt/apache-tomcat-7.0.26/bin",
+	 "home":"/opt/apache-tomcat-7.0.26/",
+	 "user":"tomcat",
+	 "group":"tomcat"
+   },
+   "run_list": [ "recipe[cep-recipe]" ]
+ }

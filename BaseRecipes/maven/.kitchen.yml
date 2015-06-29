@@ -1,0 +1,26 @@
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+  customize:
+    memory: 1024
+
+platforms:
+  - name: ubuntu-12.04
+    run_list:
+      - recipe[apt::default]
+  - name: ubuntu-10.04
+    run_list:
+      - recipe[apt::default]
+  - name: centos-6.4
+  - name: centos-5.9
+
+suites:
+  - name: maven2
+    run_list:
+      - recipe[fake::default]
+    attributes:
+      maven:
+        version: 2
+  - name: maven3
+    run_list:
+      - recipe[fake::default]

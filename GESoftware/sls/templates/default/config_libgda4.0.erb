@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<libgda-config>
+  <!-- User specific data sources go here -->
+  <section path="/apps/libgda/Datasources/alienvault">
+        <entry name="Provider" type="string" value="MySQL"/>
+        <entry name="Username" type="string" value="<%= node[:ossim][:server][:db_user]%>"/>
+        <entry name="Password" type="string" value="<%= node[:ossim][:server][:db_pass]%>"/>
+        <entry name="DSN" type="string" value="PORT=<%= node[:ossim][:server][:db_port]%>;DATABASE=alienvault;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+    </section>
+    <section path="/apps/libgda/Datasources/alienvault_siem">
+        <entry name="Provider" type="string" value="MySQL"/>
+        <entry name="Username" type="string" value="<%= node[:ossim][:server][:db_user]%>"/>
+        <entry name="Password" type="string" value="<%= node[:ossim][:server][:db_pass]%>"/>
+        <entry name="DSN" type="string" value="PORT=<%= node[:ossim][:server][:db_port]%>;DATABASE=alienvault_siem;HOST=<%= node[:ossim][:server][:db_ip]%>"/>
+    </section>
+</libgda-config>
